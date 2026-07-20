@@ -9,10 +9,21 @@
     { id: "promo", rotulo: "Em promoção" },
   ];
 
+  /* ícones das categorias (traço simples, estilo pesponto) */
+  const ICONES = {
+    "Todas": '<path d="M12 13.5c2.6 0 5 1.9 5 4.2 0 1.5-1.1 2.3-2.4 2.3-1 0-1.8-.4-2.6-.4s-1.6.4-2.6.4c-1.3 0-2.4-.8-2.4-2.3 0-2.3 2.4-4.2 5-4.2Z"/><circle cx="7.2" cy="9.4" r="1.7"/><circle cx="16.8" cy="9.4" r="1.7"/><circle cx="9.8" cy="6" r="1.7"/><circle cx="14.2" cy="6" r="1.7"/>',
+    "Laços": '<path d="M12 12 5.5 8.2c-1.2-.7-2.5.3-2.5 1.8v4c0 1.5 1.3 2.5 2.5 1.8L12 12Zm0 0 6.5-3.8c1.2-.7 2.5.3 2.5 1.8v4c0 1.5-1.3 2.5-2.5 1.8L12 12Z"/><circle cx="12" cy="12" r="1.6"/>',
+    "Gravatas": '<path d="M12 10.5 6.8 7.3C5.7 6.6 4.5 7.5 4.5 8.8v6.4c0 1.3 1.2 2.2 2.3 1.5L12 13.5m0-3 5.2-3.2c1.1-.7 2.3.2 2.3 1.5v6.4c0 1.3-1.2 2.2-2.3 1.5L12 13.5m0-3v3"/><rect x="10.6" y="10.4" width="2.8" height="3.2" rx="1"/>',
+    "Gargantilhas & Colares": '<path d="M4 7c1.8 3.4 4.6 5.2 8 5.2S18.2 10.4 20 7"/><circle cx="12" cy="12.4" r="1.4"/><circle cx="8" cy="11.5" r="1.1"/><circle cx="16" cy="11.5" r="1.1"/><circle cx="12" cy="16.2" r="2" /><path d="M12 14.2v-1"/>',
+    "Bandanas & Lenços": '<path d="M5 7.5h14l-5.6 8.3a1.7 1.7 0 0 1-2.8 0L5 7.5Z"/><path d="M5 7.5c2.3 1.4 11.7 1.4 14 0"/>',
+    "Penteados": '<path d="M12 4.5l1.2 3.1 3.1 1.2-3.1 1.2L12 13.1l-1.2-3.1-3.1-1.2 3.1-1.2L12 4.5Z"/><path d="M6.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2Z"/><path d="M17.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2Z"/>',
+    "Conjuntos": '<path d="M8.5 5.5a2.8 2.8 0 0 0-2.8 2.8c0 2.6 2.8 4.6 5.3 6.2 2.5-1.6 5.3-3.6 5.3-6.2a2.8 2.8 0 0 0-5.1-1.6l-.2.3-.2-.3a2.8 2.8 0 0 0-2.3-1.2Z"/><path d="M6 17.5h12M8 20h8"/>',
+  };
+
   const grade = document.getElementById("grade");
   const conta = document.getElementById("conta");
   const vazio = document.getElementById("vazio");
-  const chipsCat = document.getElementById("chips-cat");
+  const catBlocos = document.getElementById("cat-blocos");
   const chipsTag = document.getElementById("chips-tag");
   const busca = document.getElementById("busca");
   const ordem = document.getElementById("ordem");
@@ -84,7 +95,7 @@
     sacolaBadge.hidden = total === 0;
 
     if (!itens.length) {
-      sacolaItens.innerHTML = `<p class="sacola-vazia">A sua sacola está vazia.<br>Escolha umas cartelas caprichadas aí. 🐶</p>`;
+      sacolaItens.innerHTML = `<p class="sacola-vazia">A sua sacola está vazia.<br>Escolha uns acessórios caprichados aí. 🐶</p>`;
       sacolaRodape.innerHTML = "";
       return;
     }
@@ -170,7 +181,7 @@
 
     const esgotado = p.stock !== null && p.stock !== undefined && p.stock <= 0;
     const meta = [];
-    if (p.qty) meta.push(`Cartela com ${p.qty} un`);
+    if (p.qty) meta.push(p.qty > 1 ? `Kit com ${p.qty} un` : "Unidade");
     const gen = p.gen
       ? `<span class="gen gen-${p.gen === "fêmea" ? "femea" : "macho"}">${p.gen === "fêmea" ? "Fêmea" : "Macho"}</span>`
       : "";
@@ -179,6 +190,7 @@
     return `<article class="carta" style="animation-delay:${atraso}s">
       <div class="carta-foto">
         <img src="${p.img}" alt="${p.name} — ${p.cat.toLowerCase()} da Linus Acessórios Pet" loading="lazy" width="640" height="640">
+        ${p.img2 ? `<img class="carta-foto-hover" src="${p.img2}" alt="" loading="lazy" width="640" height="640">` : ""}
         ${etiquetas.length ? `<div class="carta-etiquetas">${etiquetas.join("")}</div>` : ""}
       </div>
       <div class="carta-corpo">
@@ -209,8 +221,8 @@
     vazio.hidden = lista.length > 0;
     conta.textContent =
       lista.length === PRODUTOS.length
-        ? `${PRODUTOS.length} cartelas no catálogo`
-        : `${lista.length} de ${PRODUTOS.length} cartelas`;
+        ? `${PRODUTOS.length} acessórios no catálogo`
+        : `${lista.length} de ${PRODUTOS.length} acessórios`;
   }
 
   grade.addEventListener("click", (e) => {
@@ -219,21 +231,27 @@
   });
 
   function montarChips() {
-    chipsCat.innerHTML = "";
+    catBlocos.innerHTML = "";
     CATEGORIAS.forEach((cat) => {
       const total = cat === "Todas" ? PRODUTOS.length : PRODUTOS.filter((p) => p.cat === cat).length;
       const b = document.createElement("button");
       b.type = "button";
-      b.className = "chip";
-      b.textContent = `${cat} (${total})`;
+      b.className = "cat-bloco";
+      b.innerHTML = `
+        <span class="cat-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ICONES[cat] || ICONES["Todas"]}</svg>
+        </span>
+        <span class="cat-nome">${cat === "Gargantilhas & Colares" ? "Gargantilhas" : cat === "Bandanas & Lenços" ? "Bandanas" : cat}</span>
+        <span class="cat-total">${total} ${total === 1 ? "item" : "itens"}</span>`;
       b.setAttribute("aria-pressed", String(cat === estado.cat));
       b.addEventListener("click", () => {
         estado.cat = cat;
-        chipsCat.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", "false"));
+        catBlocos.querySelectorAll(".cat-bloco").forEach((c) => c.setAttribute("aria-pressed", "false"));
         b.setAttribute("aria-pressed", "true");
         render();
+        document.getElementById("grade").scrollIntoView({ behavior: "smooth", block: "start" });
       });
-      chipsCat.appendChild(b);
+      catBlocos.appendChild(b);
     });
 
     chipsTag.innerHTML = "";
@@ -267,7 +285,7 @@
     estado.tags.clear();
     estado.busca = "";
     busca.value = "";
-    chipsCat.querySelectorAll(".chip").forEach((c, i) => c.setAttribute("aria-pressed", String(i === 0)));
+    catBlocos.querySelectorAll(".cat-bloco").forEach((c, i) => c.setAttribute("aria-pressed", String(i === 0)));
     chipsTag.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", "false"));
     render();
   });
@@ -280,7 +298,9 @@
     a.href = "#catalogo";
     a.textContent = cat;
     a.addEventListener("click", () => {
-      const alvo = [...chipsCat.querySelectorAll(".chip")].find((c) => c.textContent.startsWith(cat));
+      const alvo = [...catBlocos.querySelectorAll(".cat-bloco")].find((c) =>
+        c.querySelector(".cat-nome").textContent.startsWith(cat.split(" ")[0])
+      );
       if (alvo) alvo.click();
     });
     li.appendChild(a);

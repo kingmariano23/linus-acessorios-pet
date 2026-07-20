@@ -26,7 +26,7 @@
       caixa.innerHTML = `
         <span class="status-selo status-pago">✓ Pagamento confirmado</span>
         <h1 style="margin-top:1rem">Pedido feito, ${"capricho a caminho"}! 🐶</h1>
-        <p class="pagina-sub" style="margin-top:.6rem">Recebemos o seu pagamento. Vamos preparar as cartelas e postar de Natal-RN para o seu endereço. Qualquer coisa, chama a gente no <a href="https://wa.me/5584996827176" target="_blank" rel="noopener">WhatsApp</a>.</p>
+        <p class="pagina-sub" style="margin-top:.6rem">Recebemos o seu pagamento. Vamos preparar os seus acessórios e postar de Natal-RN para o seu endereço. Qualquer coisa, chama a gente no <a href="https://wa.me/5584996827176" target="_blank" rel="noopener">WhatsApp</a>.</p>
         ${itensHTML(p)}${seloDemo(p)}
         <a class="btn btn-vinho" style="margin-top:1.4rem" href="index.html#catalogo">Voltar ao catálogo</a>`;
       return;

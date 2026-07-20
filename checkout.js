@@ -112,7 +112,7 @@
     e.preventDefault();
     erro("");
 
-    if (!itens.length) return erro("A sua sacola está vazia. Volte ao catálogo e escolha as cartelas.");
+    if (!itens.length) return erro("A sua sacola está vazia. Volte ao catálogo e escolha os acessórios.");
 
     const obrigatorios = ["nome", "email", "cpf", "cep", "uf", "logradouro", "numero", "bairro", "cidade"];
     for (const id of obrigatorios) {
@@ -190,7 +190,7 @@
       PRODUTOS = window.PRODUCTS || [];
     }
     if (!itens.length) {
-      erro("A sua sacola está vazia. Volte ao catálogo e escolha as cartelas. 🐶");
+      erro("A sua sacola está vazia. Volte ao catálogo e escolha os acessórios. 🐶");
       $("btn-pagar").disabled = true;
     }
     trocaMetodo("PIX");

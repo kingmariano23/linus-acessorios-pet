@@ -21,6 +21,7 @@ await sql`
     gen         text,
     qty         int,
     img         text,
+    img2        text,
     stock       int,
     active      boolean NOT NULL DEFAULT true,
     created_at  timestamptz NOT NULL DEFAULT now(),
@@ -73,6 +74,7 @@ await sql`
   )
 `;
 
+await sql`ALTER TABLE products ADD COLUMN IF NOT EXISTS img2 text`;
 await sql`CREATE INDEX IF NOT EXISTS idx_orders_asaas ON orders (asaas_payment_id)`;
 await sql`CREATE INDEX IF NOT EXISTS idx_orders_status ON orders (status)`;
 

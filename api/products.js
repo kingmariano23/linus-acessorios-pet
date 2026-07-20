@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   if (req.method !== "GET") return res.status(405).json({ error: "Método não permitido" });
   try {
     const rows = await sql`
-      SELECT slug, name, description, price::float, compare::float, cat, tags, gen, qty, img, stock
+      SELECT slug, name, description, price::float, compare::float, cat, tags, gen, qty, img, img2, stock
       FROM products
       WHERE active
       ORDER BY cat, name

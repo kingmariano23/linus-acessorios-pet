@@ -39,7 +39,7 @@ export default async function handler(req, res) {
     /* produtos */
     if (rota === "products" && !id && req.method === "GET") {
       const rows = await sql`
-        SELECT id, slug, name, description, price::float, compare::float, cat, tags, gen, qty, img, stock, active
+        SELECT id, slug, name, description, price::float, compare::float, cat, tags, gen, qty, img, img2, stock, active
         FROM products ORDER BY cat, name
       `;
       return res.status(200).json(rows);
@@ -50,9 +50,9 @@ export default async function handler(req, res) {
       const slugBase = slugify(p.name);
       const slugFinal = `${slugBase}-${crypto.randomBytes(2).toString("hex")}`;
       const [row] = await sql`
-        INSERT INTO products (slug, name, description, price, compare, cat, tags, gen, qty, img, stock, active)
+        INSERT INTO products (slug, name, description, price, compare, cat, tags, gen, qty, img, img2, stock, active)
         VALUES (${slugFinal}, ${p.name}, ${p.description}, ${p.price}, ${p.compare}, ${p.cat},
-                ${p.tags}, ${p.gen}, ${p.qty}, ${p.img}, ${p.stock}, ${p.active})
+                ${p.tags}, ${p.gen}, ${p.qty}, ${p.img}, ${p.img2}, ${p.stock}, ${p.active})
         RETURNING id, slug
       `;
       return res.status(201).json(row);
@@ -63,7 +63,7 @@ export default async function handler(req, res) {
       const [row] = await sql`
         UPDATE products SET name = ${p.name}, description = ${p.description}, price = ${p.price},
           compare = ${p.compare}, cat = ${p.cat}, tags = ${p.tags}, gen = ${p.gen}, qty = ${p.qty},
-          img = ${p.img}, stock = ${p.stock}, active = ${p.active}, updated_at = now()
+          img = ${p.img}, img2 = ${p.img2}, stock = ${p.stock}, active = ${p.active}, updated_at = now()
         WHERE id = ${Number(id)} RETURNING id
       `;
       if (!row) return res.status(404).json({ error: "Produto não encontrado" });
@@ -154,6 +154,7 @@ function validaProduto(b = {}) {
     gen: b.gen === "fêmea" || b.gen === "macho" ? b.gen : null,
     qty: b.qty ? parseInt(b.qty, 10) : null,
     img: b.img ? String(b.img) : null,
+    img2: b.img2 ? String(b.img2) : null,
     stock: b.stock === null || b.stock === "" || b.stock === undefined ? null : Math.max(0, parseInt(b.stock, 10) || 0),
     active: b.active !== false,
   };

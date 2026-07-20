@@ -8,6 +8,7 @@
   let PEDIDOS = [];
   let editandoId = null;
   let fotoUrl = null;
+  let fotoUrl2 = null;
 
   async function api(caminho, opts = {}) {
     const r = await fetch(`/api/admin/${caminho}`, {
@@ -117,6 +118,7 @@
   function abrirFormulario(p) {
     editandoId = p ? p.id : null;
     fotoUrl = p ? p.img : null;
+    fotoUrl2 = p ? p.img2 : null;
     $("dlg-titulo").textContent = p ? `Editar: ${p.name}` : "Novo produto";
     $("p-nome").value = p?.name || "";
     $("p-descricao").value = p?.description || "";
@@ -132,34 +134,43 @@
     $("p-ativo").checked = p ? p.active : true;
     $("p-foto").value = "";
     $("p-foto-status").textContent = "";
+    $("p-foto2").value = "";
+    $("p-foto2-status").textContent = "";
     $("produto-erro").hidden = true;
     const prev = $("p-foto-preview");
     prev.hidden = !fotoUrl;
     if (fotoUrl) prev.src = fotoUrl;
+    const prev2 = $("p-foto2-preview");
+    prev2.hidden = !fotoUrl2;
+    if (fotoUrl2) prev2.src = fotoUrl2;
     dlg.showModal();
   }
 
-  $("p-foto").addEventListener("change", async () => {
-    const f = $("p-foto").files[0];
-    if (!f) return;
-    $("p-foto-status").textContent = "Enviando foto…";
-    try {
-      const r = await fetch(`/api/admin/upload?filename=${encodeURIComponent(f.name)}`, {
-        method: "POST",
-        headers: { "Content-Type": f.type || "application/octet-stream" },
-        body: f,
-      });
-      const data = await r.json();
-      if (!r.ok) throw new Error(data.error || "Falha no envio");
-      fotoUrl = data.url;
-      const prev = $("p-foto-preview");
-      prev.src = fotoUrl;
-      prev.hidden = false;
-      $("p-foto-status").textContent = "✓ Foto enviada";
-    } catch (err) {
-      $("p-foto-status").textContent = `Erro: ${err.message}`;
-    }
-  });
+  function ligarUpload(inputId, previewId, statusId, aoSubir) {
+    $(inputId).addEventListener("change", async () => {
+      const f = $(inputId).files[0];
+      if (!f) return;
+      $(statusId).textContent = "Enviando foto…";
+      try {
+        const r = await fetch(`/api/admin/upload?filename=${encodeURIComponent(f.name)}`, {
+          method: "POST",
+          headers: { "Content-Type": f.type || "application/octet-stream" },
+          body: f,
+        });
+        const data = await r.json();
+        if (!r.ok) throw new Error(data.error || "Falha no envio");
+        aoSubir(data.url);
+        const prev = $(previewId);
+        prev.src = data.url;
+        prev.hidden = false;
+        $(statusId).textContent = "✓ Foto enviada";
+      } catch (err) {
+        $(statusId).textContent = `Erro: ${err.message}`;
+      }
+    });
+  }
+  ligarUpload("p-foto", "p-foto-preview", "p-foto-status", (u) => { fotoUrl = u; });
+  ligarUpload("p-foto2", "p-foto2-preview", "p-foto2-status", (u) => { fotoUrl2 = u; });
 
   const numeroBR = (v) => {
     const n = Number(String(v).replace(/\./g, "").replace(",", "."));
@@ -184,6 +195,7 @@
       stock: $("p-estoque").value.trim() === "" ? null : $("p-estoque").value,
       tags,
       img: fotoUrl,
+      img2: fotoUrl2,
       active: $("p-ativo").checked,
     };
 
