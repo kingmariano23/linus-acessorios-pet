@@ -15,6 +15,11 @@
     </section>`;
   }
 
+  const seloDemo = (p) =>
+    p.demo
+      ? `<p style="margin-top:1rem"><span class="status-selo status-pendente">🧪 Demonstração — nenhuma cobrança real foi feita</span></p>`
+      : "";
+
   function render(p) {
     if (p.status === "pago") {
       clearInterval(timer);
@@ -22,7 +27,7 @@
         <span class="status-selo status-pago">✓ Pagamento confirmado</span>
         <h1 style="margin-top:1rem">Pedido feito, ${"capricho a caminho"}! 🐶</h1>
         <p class="pagina-sub" style="margin-top:.6rem">Recebemos o seu pagamento. Vamos preparar as cartelas e postar de Natal-RN para o seu endereço. Qualquer coisa, chama a gente no <a href="https://wa.me/5584996827176" target="_blank" rel="noopener">WhatsApp</a>.</p>
-        ${itensHTML(p)}
+        ${itensHTML(p)}${seloDemo(p)}
         <a class="btn btn-vinho" style="margin-top:1.4rem" href="index.html#catalogo">Voltar ao catálogo</a>`;
       return;
     }
@@ -37,7 +42,7 @@
           <input type="text" readonly value="${p.pix_payload}" id="pix-texto" aria-label="Código Pix copia-e-cola">
           <button class="btn btn-vinho" type="button" id="pix-copiar">Copiar</button>
         </div>
-        ${itensHTML(p)}`;
+        ${itensHTML(p)}${seloDemo(p)}`;
       document.getElementById("pix-copiar").addEventListener("click", async () => {
         try {
           await navigator.clipboard.writeText(p.pix_payload);

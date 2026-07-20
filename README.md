@@ -46,8 +46,8 @@ Diagramas completos (gerados com [Archify](https://github.com/tt-a1i/archify)) e
 | `BLOB_READ_WRITE_TOKEN` | Vercel Blob (criada ao linkar o store) |
 | `ADMIN_PASSWORD` | Senha do painel admin |
 | `SESSION_SECRET` | Assinatura do cookie de sessão do admin |
-| `ASAAS_API_KEY` | Chave da API do Asaas |
-| `ASAAS_ENV` | `production` para valer dinheiro de verdade; qualquer outro valor = sandbox |
+| `ASAAS_API_KEY` | Chave da API do Asaas — **sem ela, o site roda em modo demonstração** (cobranças simuladas, PIX confirmado sozinho após ~40s, selo "🧪 Demonstração" nas telas; CVV 999 simula recusa no cartão) |
+| `ASAAS_ENV` | `production` para valer dinheiro de verdade; `mock` força demonstração; qualquer outro valor = sandbox |
 | `ASAAS_WEBHOOK_TOKEN` | Token conferido no webhook (configure o mesmo valor no painel do Asaas) |
 
 ## Rodando localmente

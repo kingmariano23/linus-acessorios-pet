@@ -19,6 +19,7 @@
   "private": "true",
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
-    "@vercel/blob": "^2.6.1"
+    "@vercel/blob": "^2.6.1",
+    "qrcode": "^1.5.4"
   }
 }
