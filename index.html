@@ -44,7 +44,21 @@
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.2-.8l.4-.5c.1-.2.1-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.9.9-1.2 2.1-.6 3.5a11 11 0 0 0 4.3 4.7c1.6 1 2.6 1.1 3.5.9.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2 0-.1-.2-.2-.5-.4Z"/></svg>
     WhatsApp
   </a>
+  <button class="sacola-botao" id="abrir-sacola" type="button" aria-label="Abrir a sacola de compras">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 8h14l-1.2 13H6.2L5 8Zm3.5 0V6.5a3.5 3.5 0 0 1 7 0V8"/></svg>
+    <span class="sacola-badge" id="sacola-badge" hidden>0</span>
+  </button>
 </header>
+
+<div class="sacola-veu" id="sacola-veu" hidden></div>
+<aside class="sacola" id="sacola" aria-label="Sacola de compras" hidden>
+  <header class="sacola-cabeca">
+    <h2>Sua sacola</h2>
+    <button class="sacola-fechar" id="fechar-sacola" type="button" aria-label="Fechar a sacola">×</button>
+  </header>
+  <div class="sacola-itens" id="sacola-itens"></div>
+  <footer class="sacola-rodape" id="sacola-rodape"></footer>
+</aside>
 
 <main>
   <section class="hero">
@@ -112,13 +126,13 @@
       <ol class="passos">
         <li>
           <span class="passo-num" aria-hidden="true">1</span>
-          <h3>Monte o seu pedido</h3>
-          <p>Navegue pelo catálogo e anote as cartelas que o seu atendimento precisa.</p>
+          <h3>Monte a sua sacola</h3>
+          <p>Navegue pelo catálogo e adicione as cartelas que o seu atendimento precisa.</p>
         </li>
         <li>
           <span class="passo-num" aria-hidden="true">2</span>
-          <h3>Chame no WhatsApp</h3>
-          <p>O botão de cada produto já abre a conversa com o pedido preenchido. Pagamento por Pix ou cartão.</p>
+          <h3>Pague no próprio site</h3>
+          <p>Pix na hora ou cartão de crédito, com pagamento 100% seguro. Prefere conversar? O WhatsApp continua aberto.</p>
         </li>
         <li>
           <span class="passo-num" aria-hidden="true">3</span>

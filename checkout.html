@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fechar pedido — Linus Acessórios Pet</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topo">
+  <a class="marca" href="index.html" aria-label="Linus Acessórios Pet — voltar para a loja">
+    <img class="marca-logo" src="assets/brand/logo.jpg" alt="" width="44" height="44">
+    <span class="marca-nome">LINUS<small>Acessórios Pet</small></span>
+  </a>
+  <nav class="menu" aria-label="Navegação">
+    <a href="index.html#catalogo">← Voltar ao catálogo</a>
+  </nav>
+</header>
+
+<main class="pagina">
+  <h1>Fechar pedido</h1>
+  <p class="pagina-sub">Pagamento seguro no próprio site — Pix na hora ou cartão de crédito.</p>
+
+  <div class="aviso-erro" id="erro" hidden></div>
+
+  <form class="checkout-grade" id="form-checkout" novalidate>
+    <div>
+      <section class="bloco" aria-labelledby="t-dados">
+        <h2 id="t-dados"><span class="passo-num">1</span> Seus dados</h2>
+        <div class="campos">
+          <div class="campo campo-cheio">
+            <label for="nome">Nome completo</label>
+            <input id="nome" name="nome" autocomplete="name" required>
+          </div>
+          <div class="campo">
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="campo">
+            <label for="cpf">CPF</label>
+            <input id="cpf" name="cpf" inputmode="numeric" placeholder="000.000.000-00" required>
+          </div>
+          <div class="campo campo-cheio">
+            <label for="telefone">WhatsApp / celular</label>
+            <input id="telefone" name="telefone" inputmode="tel" autocomplete="tel" placeholder="(84) 90000-0000">
+          </div>
+        </div>
+      </section>
+
+      <section class="bloco" aria-labelledby="t-endereco">
+        <h2 id="t-endereco"><span class="passo-num">2</span> Endereço de entrega</h2>
+        <div class="campos">
+          <div class="campo">
+            <label for="cep">CEP</label>
+            <input id="cep" name="cep" inputmode="numeric" placeholder="59000-000" required>
+          </div>
+          <div class="campo">
+            <label for="uf">Estado</label>
+            <select id="uf" name="uf" required>
+              <option value="">UF</option>
+              <option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option>
+              <option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option>
+              <option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option>
+              <option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+              <option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option>
+              <option>SE</option><option>TO</option>
+            </select>
+          </div>
+          <div class="campo campo-cheio">
+            <label for="logradouro">Rua / avenida</label>
+            <input id="logradouro" name="logradouro" autocomplete="address-line1" required>
+          </div>
+          <div class="campo">
+            <label for="numero">Número</label>
+            <input id="numero" name="numero" required>
+          </div>
+          <div class="campo">
+            <label for="complemento">Complemento (opcional)</label>
+            <input id="complemento" name="complemento">
+          </div>
+          <div class="campo">
+            <label for="bairro">Bairro</label>
+            <input id="bairro" name="bairro" required>
+          </div>
+          <div class="campo">
+            <label for="cidade">Cidade</label>
+            <input id="cidade" name="cidade" autocomplete="address-level2" required>
+          </div>
+        </div>
+      </section>
+
+      <section class="bloco" aria-labelledby="t-pagto">
+        <h2 id="t-pagto"><span class="passo-num">3</span> Pagamento</h2>
+        <div class="pagto-abas" role="group" aria-label="Forma de pagamento">
+          <button class="pagto-aba" type="button" id="aba-pix" aria-pressed="true">
+            <img src="assets/brand/pix.png" alt="" height="20"> Pix
+          </button>
+          <button class="pagto-aba" type="button" id="aba-cartao" aria-pressed="false">💳 Cartão de crédito</button>
+        </div>
+
+        <p id="pix-nota">Você paga com o QR Code (ou copia-e-cola) na próxima tela e a confirmação é na hora. 💚</p>
+
+        <div class="campos" id="cartao-campos" hidden>
+          <div class="campo campo-cheio">
+            <label for="card-numero">Número do cartão</label>
+            <input id="card-numero" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000">
+          </div>
+          <div class="campo campo-cheio">
+            <label for="card-nome">Nome impresso no cartão</label>
+            <input id="card-nome" autocomplete="cc-name">
+          </div>
+          <div class="campo">
+            <label for="card-validade">Validade (MM/AA)</label>
+            <input id="card-validade" inputmode="numeric" autocomplete="cc-exp" placeholder="12/28">
+          </div>
+          <div class="campo">
+            <label for="card-cvv">CVV</label>
+            <input id="card-cvv" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4">
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <section class="bloco" aria-labelledby="t-resumo">
+        <h2 id="t-resumo">Resumo da sacola</h2>
+        <div id="resumo-itens"></div>
+        <div class="resumo-linha"><span>Subtotal</span><span id="resumo-subtotal">—</span></div>
+        <div class="resumo-linha"><span>Frete (<span id="resumo-regiao">informe o UF</span>)</span><span id="resumo-frete">—</span></div>
+        <div class="resumo-linha total"><span>Total</span><span id="resumo-total">—</span></div>
+        <button class="btn btn-vinho btn-pagar" id="btn-pagar" type="submit">Pagar agora</button>
+        <p class="selo-seguro">🔒 Pagamento processado pelo Asaas. Seus dados não ficam guardados no site.</p>
+      </section>
+    </aside>
+  </form>
+</main>
+
+<script src="checkout.js"></script>
+</body>
+</html>

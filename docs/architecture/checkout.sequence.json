@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Checkout Transparente — Asaas",
+    "subtitle": "Pedido, cobrança PIX/cartão e confirmação por webhook",
+    "viewBox": [920, 860],
+    "output": "checkout.sequence.html"
+  },
+  "participants": [
+    { "id": "cliente", "type": "external", "label": "Cliente", "sublabel": "navegador" },
+    { "id": "loja", "type": "frontend", "label": "Loja", "sublabel": "/checkout" },
+    { "id": "api", "type": "backend", "label": "API", "sublabel": "/api/checkout" },
+    { "id": "asaas", "type": "external", "label": "Asaas", "sublabel": "sandbox" },
+    { "id": "db", "type": "database", "label": "Postgres", "sublabel": "pedidos" }
+  ],
+  "segments": [
+    { "from": 155, "to": 395, "label": "01 / CHECKOUT" },
+    { "from": 415, "to": 650, "label": "02 / PAGAMENTO" }
+  ],
+  "messages": [
+    { "from": "cliente", "to": "loja", "y": 165, "label": "finaliza pedido" },
+    { "from": "loja", "to": "api", "y": 200, "label": "POST /api/checkout", "variant": "emphasis" },
+    { "from": "api", "to": "db", "y": 235, "label": "grava pedido pendente" },
+    { "from": "api", "to": "asaas", "y": 270, "label": "cliente + cobrança", "variant": "emphasis" },
+    { "from": "asaas", "to": "api", "y": 305, "label": "PIX QR / id cobrança", "variant": "return" },
+    { "from": "api", "to": "loja", "y": 340, "label": "dados de pagamento", "variant": "return" },
+    { "from": "loja", "to": "cliente", "y": 375, "label": "exibe QR PIX / cartão", "variant": "return" },
+    { "from": "cliente", "to": "asaas", "y": 440, "label": "paga (banco / cartão)", "variant": "dashed" },
+    { "from": "asaas", "to": "api", "y": 480, "label": "webhook: pago", "variant": "security" },
+    { "from": "api", "to": "db", "y": 515, "label": "status → pago" },
+    { "from": "loja", "to": "api", "y": 550, "label": "GET status (polling)", "variant": "dashed" },
+    { "from": "api", "to": "loja", "y": 585, "label": "pago ✓", "variant": "return" },
+    { "from": "loja", "to": "cliente", "y": 620, "label": "tela de sucesso", "variant": "return" }
+  ],
+  "activations": [
+    { "participant": "api", "from": 195, "to": 345, "type": "backend" },
+    { "participant": "asaas", "from": 265, "to": 310, "type": "external" },
+    { "participant": "api", "from": 475, "to": 590, "type": "backend" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Transparente", "items": ["Cliente nunca sai do site", "Cartão tokenizado via API (sem redirect)", "PIX com QR + copia-e-cola na página"] },
+    { "dot": "rose", "title": "Confirmação", "items": ["Webhook do Asaas valida por token secreto", "Pedido vira 'pago' no Postgres", "Front faz polling leve até confirmar"] }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Linus Acessórios Pet — E-commerce",
+    "subtitle": "Vercel (estático + serverless) · Neon Postgres · Vercel Blob · Asaas checkout transparente",
+    "output": "linus-ecommerce.architecture.html"
+  },
+  "components": [
+    { "id": "cliente", "type": "external", "label": "Cliente", "sublabel": "navegador", "pos": [40, 280], "size": [120, 60] },
+    { "id": "dona", "type": "external", "label": "Dona (Admin)", "sublabel": "navegador", "pos": [40, 470], "size": [120, 60] },
+    { "id": "loja", "type": "frontend", "label": "Loja", "sublabel": "catálogo + checkout", "pos": [260, 280], "size": [130, 60] },
+    { "id": "adminui", "type": "frontend", "label": "Painel Admin", "sublabel": "/admin", "pos": [260, 470], "size": [130, 60], "tag": "senha" },
+    { "id": "api", "type": "backend", "label": "API Serverless", "sublabel": "/api/* — Node", "pos": [480, 280], "size": [130, 60] },
+    { "id": "db", "type": "database", "label": "Neon Postgres", "sublabel": "produtos + pedidos + frete", "pos": [720, 130], "size": [150, 60] },
+    { "id": "asaas", "type": "external", "label": "Asaas API", "sublabel": "PIX + cartão", "pos": [720, 280], "size": [150, 60], "tag": "sandbox → prod" },
+    { "id": "blob", "type": "cloud", "label": "Vercel Blob", "sublabel": "fotos de produto", "pos": [720, 430], "size": [150, 60] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Vercel — hosting + functions", "wraps": ["loja", "adminui", "api"] }
+  ],
+  "connections": [
+    { "from": "cliente", "to": "loja", "label": "HTTPS", "variant": "emphasis" },
+    { "from": "dona", "to": "adminui", "label": "login" },
+    { "from": "loja", "to": "api", "label": "REST", "variant": "emphasis" },
+    { "from": "adminui", "to": "api", "label": "CRUD produtos", "fromSide": "right", "toSide": "bottom" },
+    { "from": "api", "to": "db", "label": "SQL", "fromSide": "right", "toSide": "left" },
+    { "from": "api", "to": "asaas", "label": "cria cobrança", "variant": "emphasis" },
+    { "from": "asaas", "to": "api", "label": "webhook pagamento", "variant": "dashed", "fromSide": "bottom", "toSide": "bottom", "via": [[655, 395]] },
+    { "from": "api", "to": "blob", "label": "upload fotos", "fromSide": "bottom", "toSide": "left", "via": [[600, 460]] }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Loja", "items": ["Catálogo lido do Postgres via API", "Carrinho no localStorage", "Checkout transparente: o cliente nunca sai do site"] },
+    { "dot": "rose", "title": "Pagamentos (Asaas)", "items": ["PIX: QR Code + copia-e-cola na própria página", "Cartão: tokenização transparente via API", "Webhook confirma e muda o pedido para pago", "Sandbox agora; produção trocando a env var"] },
+    { "dot": "emerald", "title": "Admin", "items": ["Login por senha (env var + cookie assinado)", "CRUD de produtos com upload de fotos no Blob", "Tabela de frete por região editável", "Lista de pedidos com status"] }
+  ]
+}

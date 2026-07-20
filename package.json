@@ -1,0 +1,24 @@
+{
+  "name": "linus-acessorios-pet",
+  "version": "1.0.0",
+  "description": "E-commerce da Linus Acessórios Pet — Vercel + Neon Postgres + Asaas",
+  "main": "app.js",
+  "scripts": {
+    "migrate": "node scripts/migrate.js",
+    "seed": "node scripts/seed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kingmariano23/linus-acessorios-pet.git"
+  },
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/kingmariano23/linus-acessorios-pet/issues"
+  },
+  "homepage": "https://github.com/kingmariano23/linus-acessorios-pet#readme",
+  "private": "true",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "@vercel/blob": "^2.6.1"
+  }
+}

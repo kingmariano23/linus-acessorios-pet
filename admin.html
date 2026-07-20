@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel — Linus Acessórios Pet</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- ── login ── -->
+<div class="adm-login" id="tela-login" hidden>
+  <form class="adm-login-cartao" id="form-login">
+    <img src="assets/brand/logo.jpg" alt="" width="80" height="80">
+    <h1>Painel da Linus</h1>
+    <p>Área da dona — entre com a sua senha.</p>
+    <div class="campo">
+      <label for="senha" class="sr-only">Senha</label>
+      <input type="password" id="senha" placeholder="Senha" autocomplete="current-password" required>
+    </div>
+    <p class="adm-login-erro" id="login-erro" hidden></p>
+    <button class="btn btn-vinho" type="submit" id="btn-entrar">Entrar</button>
+  </form>
+</div>
+
+<!-- ── painel ── -->
+<div id="tela-painel" hidden>
+  <header class="topo adm-topo">
+    <a class="marca" href="index.html" aria-label="Ver a loja">
+      <img class="marca-logo" src="assets/brand/logo.jpg" alt="" width="44" height="44">
+      <span class="marca-nome">LINUS<small>Painel</small></span>
+    </a>
+    <nav class="adm-abas" aria-label="Seções do painel">
+      <button class="adm-aba" data-aba="produtos" aria-pressed="true" type="button">Produtos</button>
+      <button class="adm-aba" data-aba="pedidos" aria-pressed="false" type="button">Pedidos <span class="adm-conta" id="conta-pagos" hidden></span></button>
+      <button class="adm-aba" data-aba="frete" aria-pressed="false" type="button">Frete</button>
+    </nav>
+    <button class="btn adm-sair" id="btn-sair" type="button">Sair</button>
+  </header>
+
+  <main class="adm-main">
+    <!-- produtos -->
+    <section id="aba-produtos">
+      <div class="adm-barra">
+        <input type="search" id="adm-busca" placeholder="Buscar produto…" class="adm-buscar">
+        <button class="btn btn-vinho" id="btn-novo" type="button">+ Novo produto</button>
+      </div>
+      <div class="adm-tabela-envolve">
+        <table class="adm-tabela" id="tabela-produtos">
+          <thead>
+            <tr><th>Foto</th><th>Produto</th><th>Categoria</th><th>Preço</th><th>Estoque</th><th>Ativo</th><th></th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- pedidos -->
+    <section id="aba-pedidos" hidden>
+      <div class="adm-tabela-envolve">
+        <table class="adm-tabela" id="tabela-pedidos">
+          <thead>
+            <tr><th>Pedido</th><th>Data</th><th>Cliente</th><th>Total</th><th>Pagamento</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- frete -->
+    <section id="aba-frete" hidden>
+      <div class="bloco" style="max-width:640px">
+        <h2>Frete por região</h2>
+        <p class="adm-nota">Valor cobrado no checkout conforme o estado do cliente. Deixe “Grátis acima de” em branco para nunca dar frete grátis.</p>
+        <table class="adm-tabela" id="tabela-frete">
+          <thead><tr><th>Região</th><th>Valor (R$)</th><th>Grátis acima de (R$)</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <button class="btn btn-vinho" id="btn-salvar-frete" type="button" style="margin-top:1rem">Salvar frete</button>
+        <span class="adm-salvo" id="frete-salvo" hidden>✓ Salvo</span>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ── formulário de produto ── -->
+<dialog class="adm-dialogo" id="dlg-produto">
+  <form id="form-produto" method="dialog">
+    <h2 id="dlg-titulo">Novo produto</h2>
+    <div class="campos">
+      <div class="campo campo-cheio">
+        <label for="p-nome">Nome *</label>
+        <input id="p-nome" required placeholder="Ex.: 10 Laços M Zebra">
+      </div>
+      <div class="campo campo-cheio">
+        <label for="p-descricao">Descrição (opcional)</label>
+        <textarea id="p-descricao" rows="2" placeholder="Detalhes, tamanhos, materiais…"></textarea>
+      </div>
+      <div class="campo">
+        <label for="p-cat">Categoria *</label>
+        <select id="p-cat" required>
+          <option>Laços</option><option>Gravatas</option><option>Gargantilhas & Colares</option>
+          <option>Bandanas & Lenços</option><option>Penteados</option><option>Conjuntos</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label for="p-gen">Fêmea / macho</label>
+        <select id="p-gen">
+          <option value="">Unissex</option>
+          <option value="fêmea">Fêmea</option>
+          <option value="macho">Macho</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label for="p-preco">Preço (R$) *</label>
+        <input id="p-preco" inputmode="decimal" required placeholder="14,90">
+      </div>
+      <div class="campo">
+        <label for="p-compare">Preço “de” (promoção)</label>
+        <input id="p-compare" inputmode="decimal" placeholder="deixe vazio se não for promo">
+      </div>
+      <div class="campo">
+        <label for="p-qty">Unidades na cartela</label>
+        <input id="p-qty" inputmode="numeric" placeholder="Ex.: 10">
+      </div>
+      <div class="campo">
+        <label for="p-estoque">Estoque</label>
+        <input id="p-estoque" inputmode="numeric" placeholder="vazio = sem controle">
+      </div>
+      <div class="campo campo-cheio">
+        <span class="campo label-solta">Etiquetas</span>
+        <div class="adm-checks">
+          <label><input type="checkbox" id="p-tag-safari"> Coleção Safari</label>
+          <label><input type="checkbox" id="p-tag-pronta"> Pronta entrega</label>
+          <label><input type="checkbox" id="p-tag-outlet"> Outlet</label>
+          <label><input type="checkbox" id="p-ativo" checked> Produto ativo (aparece na loja)</label>
+        </div>
+      </div>
+      <div class="campo campo-cheio">
+        <label for="p-foto">Foto do produto</label>
+        <div class="adm-foto-linha">
+          <img id="p-foto-preview" src="" alt="" hidden>
+          <input type="file" id="p-foto" accept="image/*">
+        </div>
+        <span class="adm-nota" id="p-foto-status"></span>
+      </div>
+    </div>
+    <p class="adm-login-erro" id="produto-erro" hidden></p>
+    <div class="adm-dialogo-acoes">
+      <button class="btn" type="button" id="btn-cancelar">Cancelar</button>
+      <button class="btn btn-vinho" type="submit" id="btn-salvar-produto">Salvar produto</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="admin.js"></script>
+</body>
+</html>
