@@ -1,0 +1,11 @@
+PROMPT — Conjunto gravata + Laço Macho Flamengo
+(categoria: Conjuntos)
+Anexe na IA a foto do produto: assets/products/conjunto-gravata-laco-macho-flamengo.webp
+
+Fotografia realista em alta resolução de um(a) Pug fofo(a), sentado(a) e olhando para a câmera, usando o conjunto combinando (laço na cabeça e gravata no pescoço).
+Use a imagem anexada do produto como referência EXATA do acessório — mesmas cores, estampa e formato do "Conjunto gravata + Laço Macho Flamengo".
+Estilo: foto de estúdio profissional para e-commerce pet, luz suave e difusa, fundo liso azul-serenity bem clarinho, foco nítido no pet e no acessório, expressão simpática e natural.
+Enquadramento quadrado 1:1, pet centralizado, acessório claramente visível e bem posicionado.
+Evite: deformações, dedos/mãos humanas, texto, marca d'água, acessório distorcido, mais de um pet.
+
+→ Salve o resultado como: assets/applied/conjunto-gravata-laco-macho-flamengo.webp

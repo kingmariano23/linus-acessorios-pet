@@ -1,0 +1,11 @@
+PROMPT — 05 Gargantilhas Girafinha
+(categoria: Gargantilhas & Colares)
+Anexe na IA a foto do produto: assets/products/05-gargantilhas-girafinha-17td4.webp
+
+Fotografia realista em alta resolução de um(a) Schnauzer mini fofo(a), sentado(a) e olhando para a câmera, com a gargantilha/colar em volta do pescoço, bem à mostra sobre o peito.
+Use a imagem anexada do produto como referência EXATA do acessório — mesmas cores, estampa e formato do "05 Gargantilhas Girafinha".
+Estilo: foto de estúdio profissional para e-commerce pet, luz suave e difusa, fundo liso creme/bege bem clarinho, foco nítido no pet e no acessório, expressão simpática e natural.
+Enquadramento quadrado 1:1, pet centralizado, acessório claramente visível e bem posicionado.
+Evite: deformações, dedos/mãos humanas, texto, marca d'água, acessório distorcido, mais de um pet.
+
+→ Salve o resultado como: assets/applied/05-gargantilhas-girafinha-17td4.webp

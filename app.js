@@ -20,6 +20,12 @@
     "Conjuntos": '<path d="M8.5 5.5a2.8 2.8 0 0 0-2.8 2.8c0 2.6 2.8 4.6 5.3 6.2 2.5-1.6 5.3-3.6 5.3-6.2a2.8 2.8 0 0 0-5.1-1.6l-.2.3-.2-.3a2.8 2.8 0 0 0-2.3-1.2Z"/><path d="M6 17.5h12M8 20h8"/>',
   };
 
+  /* Foto "como fica no pet" (2ª imagem). Só usamos FOTO REAL: quando o produto
+     tem img2, ela aparece no hover. Sem foto real, o card faz um leve zoom da
+     própria foto (sem imagem genérica). Para ligar uma foto real:
+     salve assets/applied/<slug>.webp e rode `node scripts/sync-applied.mjs`. */
+  const imgAplicada = (p) => p.img2 || null;
+
   const grade = document.getElementById("grade");
   const conta = document.getElementById("conta");
   const vazio = document.getElementById("vazio");
@@ -146,11 +152,6 @@
   });
 
   /* ── catálogo ──────────────────────────────────────────────────────── */
-  function linkZap(p) {
-    const texto = `Olá! Vim pelo site da Linus e quero pedir: *${p.name}* (${real(p.price)})`;
-    return `https://wa.me/${ZAP}?text=${encodeURIComponent(texto)}`;
-  }
-
   function temTag(p, tag) {
     if (tag === "femea") return p.gen === "fêmea";
     if (tag === "macho") return p.gen === "macho";
@@ -186,15 +187,21 @@
       ? `<span class="gen gen-${p.gen === "fêmea" ? "femea" : "macho"}">${p.gen === "fêmea" ? "Fêmea" : "Macho"}</span>`
       : "";
 
+    const aplicada = imgAplicada(p); // só existe quando há FOTO REAL "no pet"
+    const url = `produto.html?p=${encodeURIComponent(p.slug)}`;
     const atraso = Math.min(i, 12) * 0.03;
     return `<article class="carta" style="animation-delay:${atraso}s">
-      <div class="carta-foto">
-        <img src="${p.img}" alt="${p.name} — ${p.cat.toLowerCase()} da Linus Acessórios Pet" loading="lazy" width="640" height="640">
-        ${p.img2 ? `<img class="carta-foto-hover" src="${p.img2}" alt="" loading="lazy" width="640" height="640">` : ""}
+      <a class="carta-foto${aplicada ? "" : " sem-aplicada"}" href="${url}" aria-label="Ver ${p.name}">
+        <img class="carta-foto-frente" src="${p.img}" alt="${p.name} — ${p.cat.toLowerCase()} da Linus Acessórios Pet" loading="lazy" width="640" height="640">
+        ${aplicada ? `<img class="carta-foto-hover" src="${aplicada}" alt="${p.name} aplicado em um pet" loading="lazy" width="640" height="640">
+        <span class="carta-verpet" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M4.5 10.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm5-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm5 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm5 2a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm-9.5 2c-2.4 0-5 2-5 4.4 0 1.6 1.2 2.4 2.6 2.4 1 0 1.8-.4 2.4-.4s1.4.4 2.4.4c1.4 0 2.6-.8 2.6-2.4 0-2.4-2.6-4.4-5-4.4Z"/></svg>
+          Como fica no pet
+        </span>` : ""}
         ${etiquetas.length ? `<div class="carta-etiquetas">${etiquetas.join("")}</div>` : ""}
-      </div>
+      </a>
       <div class="carta-corpo">
-        <h3 class="carta-nome">${p.name}</h3>
+        <a class="carta-nome-link" href="${url}"><h3 class="carta-nome">${p.name}</h3></a>
         <div class="carta-meta">${gen}${gen && meta.length ? "<span>·</span>" : ""}<span>${meta.join(" · ")}</span></div>
         <div class="carta-preco">
           <span class="preco">${real(p.price)}</span>
@@ -207,9 +214,6 @@
                 <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 8h12l-1 12H7L6 8Zm3 0V6a3 3 0 0 1 6 0v2"/></svg>
                 Adicionar à sacola
               </button>`}
-          <a class="carta-zap-mini" href="${linkZap(p)}" target="_blank" rel="noopener" aria-label="Pedir ${p.name} pelo WhatsApp" title="Pedir pelo WhatsApp">
-            <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.2-.8l.4-.5c.1-.2.1-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.9.9-1.2 2.1-.6 3.5a11 11 0 0 0 4.3 4.7c1.6 1 2.6 1.1 3.5.9.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2 0-.1-.2-.2-.5-.4Z"/></svg>
-          </a>
         </div>
       </div>
     </article>`;
@@ -317,7 +321,7 @@
       PRODUTOS = await r.json();
       if (!Array.isArray(PRODUTOS) || !PRODUTOS.length) throw new Error();
     } catch {
-      PRODUTOS = window.PRODUCTS || [];
+      PRODUTOS = typeof PRODUCTS !== "undefined" ? PRODUCTS : (window.PRODUCTS || []);
     }
     montarChips();
     render();

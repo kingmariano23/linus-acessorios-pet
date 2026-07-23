@@ -407,13 +407,6 @@ a { color: var(--vinho); }
 }
 .btn-sacola:hover:not(:disabled) { background: #571e19; transform: translateY(-1px); }
 .btn-sacola:disabled { background: #cbb5b2; cursor: not-allowed; }
-.carta-zap-mini {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 40px; border-radius: 999px;
-  background: var(--zap); color: #fff;
-  transition: background-color .18s ease;
-}
-.carta-zap-mini:hover { background: var(--zap-forte); }
 
 /* ── páginas internas (checkout / pedido) ──────────────────────────── */
 .pagina {
@@ -561,8 +554,13 @@ a { color: var(--vinho); }
   .cat-bloco { scroll-snap-align: start; }
 }
 
-/* ── troca de foto no hover (2ª foto: acessório no pet) ────────────── */
-.carta-foto { position: relative; overflow: hidden; }
+/* ── foto do card: link clicável + hover ───────────────────────────── */
+.carta-foto { display: block; position: relative; overflow: hidden; cursor: pointer; }
+.carta-foto-frente { transition: transform .5s cubic-bezier(.22,1,.36,1); }
+/* sem foto real "no pet": leve zoom da própria foto ao passar o mouse */
+.carta:hover .carta-foto.sem-aplicada .carta-foto-frente { transform: scale(1.05); }
+
+/* com foto real: cross-fade para a versão aplicada no pet */
 .carta-foto .carta-foto-hover {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; opacity: 0; transform: scale(1.04);
@@ -572,4 +570,122 @@ a { color: var(--vinho); }
 .carta:focus-within .carta-foto-hover { opacity: 1; transform: scale(1); }
 @media (prefers-reduced-motion: reduce) {
   .carta-foto .carta-foto-hover { transition: opacity .2s ease; transform: none; }
+  .carta-foto-frente { transition: none; }
 }
+
+.carta-nome-link { text-decoration: none; color: inherit; }
+.carta-nome-link:hover .carta-nome { color: var(--vinho); }
+
+/* pílula "Como fica no pet" — só aparece quando há foto real aplicada */
+.carta-verpet {
+  position: absolute; left: .6rem; bottom: .6rem; z-index: 2;
+  display: inline-flex; align-items: center; gap: .3rem;
+  padding: .28rem .6rem; border-radius: 999px;
+  font-family: "Josefin Sans", sans-serif; font-size: .7rem; font-weight: 700;
+  letter-spacing: .2px; color: var(--vinho);
+  background: rgba(255, 255, 255, .92); box-shadow: 0 2px 8px rgba(111, 39, 33, .16);
+  transition: opacity .3s ease, transform .3s ease; pointer-events: none;
+}
+.carta:hover .carta-verpet,
+.carta:focus-within .carta-verpet { opacity: 0; transform: translateY(4px); }
+
+/* ── WhatsApp flutuante (único ponto de contato/compra por WhatsApp) ── */
+.zap-flutuante {
+  position: fixed; right: clamp(.9rem, 3vw, 1.6rem); bottom: clamp(.9rem, 3vw, 1.6rem);
+  z-index: 40; display: inline-flex; align-items: center; gap: .55rem;
+  padding: .7rem .95rem; border-radius: 999px;
+  background: var(--zap); color: #fff; text-decoration: none;
+  font-family: "Josefin Sans", sans-serif; font-weight: 700; font-size: .95rem;
+  box-shadow: 0 10px 26px rgba(13, 107, 57, .38);
+  transition: transform .2s ease, background-color .2s ease;
+}
+.zap-flutuante:hover { background: var(--zap-forte); transform: translateY(-2px); }
+.zap-flutuante svg { flex: 0 0 auto; }
+.zap-flutuante .zap-texto {
+  max-width: 0; overflow: hidden; white-space: nowrap;
+  opacity: 0; transition: max-width .3s ease, opacity .3s ease;
+}
+.zap-flutuante:hover .zap-texto,
+.zap-flutuante:focus-visible .zap-texto { max-width: 210px; opacity: 1; }
+@media (max-width: 600px) {
+  .zap-flutuante { padding: .7rem; }
+  .zap-flutuante .zap-texto { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zap-flutuante, .zap-flutuante .zap-texto { transition: none; }
+}
+
+/* ── página do produto ─────────────────────────────────────────────── */
+.pagina-produto { max-width: 1120px; }
+.migalha { font-size: .82rem; color: var(--musgo, #7c5b56); margin-bottom: 1.2rem; }
+.migalha a { color: var(--musgo, #7c5b56); text-decoration: none; }
+.migalha a:hover { color: var(--vinho); text-decoration: underline; }
+.migalha span { margin: 0 .35rem; opacity: .6; }
+
+.produto { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+@media (max-width: 780px) { .produto { grid-template-columns: 1fr; } }
+
+.produto-galeria { position: relative; border-radius: var(--raio); overflow: hidden; background: #fff; box-shadow: var(--sombra); border: 1px solid #f0dcd4; }
+.produto-galeria img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.produto-galeria .produto-aplicada {
+  position: absolute; inset: 0; opacity: 0; transition: opacity .35s ease;
+}
+.produto-galeria.ver-pet .produto-aplicada { opacity: 1; }
+.produto-etiquetas { position: absolute; top: .8rem; left: .8rem; display: flex; gap: .4rem; flex-wrap: wrap; }
+.produto-verpet-btn {
+  position: absolute; right: .8rem; bottom: .8rem; z-index: 2;
+  display: inline-flex; align-items: center; gap: .4rem; cursor: pointer;
+  padding: .5rem .85rem; border: 0; border-radius: 999px;
+  font-family: "Josefin Sans", sans-serif; font-weight: 700; font-size: .82rem;
+  color: var(--vinho); background: rgba(255,255,255,.95); box-shadow: 0 4px 14px rgba(111,39,33,.18);
+  transition: transform .15s ease;
+}
+.produto-verpet-btn:hover { transform: translateY(-1px); }
+.produto-verpet-btn[aria-pressed="true"] { background: var(--vinho); color: #fff; }
+
+.produto-info h1 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); line-height: 1.1; margin: .2rem 0 .6rem; }
+.produto-cat { font-family: "Josefin Sans", sans-serif; text-transform: uppercase; letter-spacing: .12em; font-size: .72rem; font-weight: 700; color: var(--pink-viva); }
+.produto-preco { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; margin: .3rem 0 1rem; }
+.produto-preco .preco { font-size: 2rem; }
+.produto-economia {
+  font-family: "Josefin Sans", sans-serif; font-weight: 700; font-size: .78rem;
+  color: #fff; background: var(--pink-viva); padding: .2rem .55rem; border-radius: 999px;
+}
+.produto-selos { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+
+.produto-desc { color: #5c3f3a; line-height: 1.6; margin: 0 0 1.4rem; max-width: 52ch; }
+
+.produto-specs { list-style: none; padding: 0; margin: 0 0 1.6rem; border-top: 1px solid #f0dcd4; }
+.produto-specs li { display: flex; justify-content: space-between; gap: 1rem; padding: .6rem 0; border-bottom: 1px solid #f0dcd4; font-size: .92rem; }
+.produto-specs dt, .produto-specs .k { color: var(--musgo, #7c5b56); }
+.produto-specs .v { font-weight: 700; color: var(--ink); text-align: right; }
+
+.produto-compra { position: sticky; bottom: 0; display: grid; gap: .7rem; padding-top: .3rem; }
+.produto-qtd { display: flex; align-items: center; gap: .8rem; }
+.produto-qtd span.rot { font-size: .9rem; color: var(--musgo, #7c5b56); }
+.produto-acoes { display: grid; gap: .6rem; }
+.btn-grande { padding: .95rem 1rem; font-size: 1rem; }
+.btn-contorno {
+  background: #fff; color: var(--vinho); border: 2px solid var(--vinho);
+}
+.btn-contorno:hover { background: var(--rosa-claro); }
+.produto-continuar { text-align: center; font-size: .9rem; }
+.produto-continuar a { color: var(--musgo, #7c5b56); }
+.produto-tranquilo { display: flex; flex-wrap: wrap; gap: .4rem 1.1rem; margin-top: .5rem; font-size: .82rem; color: var(--musgo, #7c5b56); }
+.produto-tranquilo span { display: inline-flex; align-items: center; gap: .35rem; }
+
+.relacionados { margin-top: 3.5rem; }
+.relacionados h2 { font-size: 1.3rem; margin-bottom: 1rem; }
+.grade-relacionados { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+
+/* toast de confirmação */
+.toast {
+  position: fixed; left: 50%; bottom: 1.4rem; transform: translate(-50%, 1.5rem);
+  z-index: 60; background: var(--ink); color: #fff; padding: .8rem 1.1rem; border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.25); font-size: .92rem; opacity: 0;
+  transition: opacity .25s ease, transform .25s ease; max-width: min(92vw, 420px);
+  display: flex; align-items: center; gap: .6rem;
+}
+.toast.mostra { opacity: 1; transform: translate(-50%, 0); }
+.toast a { color: #ffd; font-weight: 700; text-decoration: underline; white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { .toast { transition: opacity .2s ease; } }

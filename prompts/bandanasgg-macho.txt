@@ -1,0 +1,11 @@
+PROMPT — 3 Bandanas GG Macho
+(categoria: Bandanas & Lenços)
+Anexe na IA a foto do produto: assets/products/bandanasgg-macho.webp
+
+Fotografia realista em alta resolução de um(a) Yorkshire Terrier fofo(a), sentado(a) e olhando para a câmera, com a bandana amarrada no pescoço, caindo naturalmente sobre o peito.
+Use a imagem anexada do produto como referência EXATA do acessório — mesmas cores, estampa e formato do "3 Bandanas GG Macho".
+Estilo: foto de estúdio profissional para e-commerce pet, luz suave e difusa, fundo liso azul-serenity bem clarinho, foco nítido no pet e no acessório, expressão simpática e natural.
+Enquadramento quadrado 1:1, pet centralizado, acessório claramente visível e bem posicionado.
+Evite: deformações, dedos/mãos humanas, texto, marca d'água, acessório distorcido, mais de um pet.
+
+→ Salve o resultado como: assets/applied/bandanasgg-macho.webp

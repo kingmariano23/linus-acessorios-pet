@@ -1,0 +1,11 @@
+PROMPT — 10 Mini Florzinha para penteado
+(categoria: Penteados)
+Anexe na IA a foto do produto: assets/products/10-mini-florzinha-para-penteado.webp
+
+Fotografia realista em alta resolução de um(a) Border Collie filhote fofo(a), sentado(a) e olhando para a câmera, com o enfeite preso em um topete/penteadinho no alto da cabeça.
+Use a imagem anexada do produto como referência EXATA do acessório — mesmas cores, estampa e formato do "10 Mini Florzinha para penteado".
+Estilo: foto de estúdio profissional para e-commerce pet, luz suave e difusa, fundo liso creme/bege bem clarinho, foco nítido no pet e no acessório, expressão simpática e natural.
+Enquadramento quadrado 1:1, pet centralizado, acessório claramente visível e bem posicionado.
+Evite: deformações, dedos/mãos humanas, texto, marca d'água, acessório distorcido, mais de um pet.
+
+→ Salve o resultado como: assets/applied/10-mini-florzinha-para-penteado.webp

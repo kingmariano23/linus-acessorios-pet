@@ -187,7 +187,7 @@
       PRODUTOS = rp.ok ? await rp.json() : [];
       ZONAS = rf.ok ? await rf.json() : [];
     } catch {
-      PRODUTOS = window.PRODUCTS || [];
+      PRODUTOS = typeof PRODUCTS !== "undefined" ? PRODUCTS : (window.PRODUCTS || []);
     }
     if (!itens.length) {
       erro("A sua sacola está vazia. Volte ao catálogo e escolha os acessórios. 🐶");

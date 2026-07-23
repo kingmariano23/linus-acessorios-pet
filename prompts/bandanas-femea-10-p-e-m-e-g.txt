@@ -1,0 +1,11 @@
+PROMPT — Bandanas Fêmea (10 P e M e G)
+(categoria: Bandanas & Lenços)
+Anexe na IA a foto do produto: assets/products/bandanas-femea-10-p-e-m-e-g.webp
+
+Fotografia realista em alta resolução de um(a) Shih-tzu fofo(a), sentado(a) e olhando para a câmera, com a bandana amarrada no pescoço, caindo naturalmente sobre o peito.
+Use a imagem anexada do produto como referência EXATA do acessório — mesmas cores, estampa e formato do "Bandanas Fêmea (10 P e M e G)".
+Estilo: foto de estúdio profissional para e-commerce pet, luz suave e difusa, fundo liso rosa bem clarinho, foco nítido no pet e no acessório, expressão simpática e natural.
+Enquadramento quadrado 1:1, pet centralizado, acessório claramente visível e bem posicionado.
+Evite: deformações, dedos/mãos humanas, texto, marca d'água, acessório distorcido, mais de um pet.
+
+→ Salve o resultado como: assets/applied/bandanas-femea-10-p-e-m-e-g.webp
